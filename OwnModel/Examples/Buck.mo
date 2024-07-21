@@ -3,7 +3,7 @@ within OwnModel.Examples;
 model Buck "TWIST board used as a buck (step down) DC/DC converter supplying a resistive load"
   extends Modelica.Icons.Example;
   parameter Boolean closed_loop=true "closed loop voltage control if true, else open loop (constant duty cycle)";
-  Components.TWIST twist annotation(
+  Components.TWIST twist(averaged = true)  annotation(
     Placement(transformation(origin = {40, -20}, extent = {{-20, -20}, {20, 20}})));
   Modelica.Electrical.Analog.Basic.Ground ground annotation(
     Placement(transformation(origin = {40, -90}, extent = {{-10, -10}, {10, 10}})));

@@ -1,6 +1,8 @@
 within OwnModel.Components;
 
 model TWIST "TWIST Power converter board, with PWM control"
+    parameter Boolean averaged = false "averaged model if true, else switched model";
+
 Modelica.Electrical.Analog.Interfaces.NegativePin gnd "ground (DC bus -)" annotation(
     Placement(transformation(origin = {0, -100}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {0, -100}, extent = {{-10, -10}, {10, 10}})));
    Modelica.Electrical.Analog.Interfaces.PositivePin high "high side of leg (DC bus +)" annotation(
@@ -15,11 +17,11 @@ Modelica.Blocks.Interfaces.RealInput duty2 "duty cycle of leg 2" annotation(
     Placement(transformation(origin = {-120, -40}, extent = {{-20, -20}, {20, 20}}), iconTransformation(origin = {-120, -40}, extent = {{-20, -20}, {20, 20}})));
 
   
-  Components.PWMLeg leg1 "power leg 1" annotation(
+  Components.PWMorAvgLeg leg1(averaged = averaged)  "power leg 1" annotation(
     Placement(transformation(origin = {-20, 40}, extent = {{-10, -20}, {10, 20}})));
-  Components.PWMLeg leg2 "power leg 2" annotation(
+  Components.PWMorAvgLeg leg2(averaged = averaged)  "power leg 2" annotation(
     Placement(transformation(origin = {40, -40}, extent = {{-10, -20}, {10, 20}})));
-  LCFilter filter1(final rC= 0)  "output LC filter of leg 1" annotation(
+  LCFilter filter1(final rC = 0)  "output LC filter of leg 1" annotation(
     Placement(transformation(origin = {70, 40}, extent = {{-10, -10}, {10, 10}})));
   LCFilter filter2(final rC = 0)  "output LC filter of leg 2" annotation(
     Placement(transformation(origin = {70, -40}, extent = {{-10, -10}, {10, 10}})));
@@ -50,6 +52,6 @@ equation
     Line(points = {{-120, -40}, {28, -40}}, color = {0, 0, 127}));
 
 annotation(
-    Icon(graphics = {Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {0, 40}, extent = {{-80, 40}, {80, -40}}, textString = "TWIST")}),
+    Icon(graphics = {Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {0, 40}, extent = {{-80, 40}, {80, -40}}, textString = "TWIST"), Text(origin = {0, -60}, extent = {{-90, 20}, {90, -20}}, textString = "averaged: %averaged")}),
   experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
 end TWIST;

@@ -1,4 +1,6 @@
 TWIST
 PWMLeg
+AvgLeg
+PWMorAvgLeg
 LegSwitches
 LCFilter

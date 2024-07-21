@@ -4,14 +4,14 @@ model LCFilter "LC filter of TWIST board"
   /*Inductance*/
   parameter SI.Inductance L(displayUnit="uH")=33e-6 "filter inductance";
   parameter SI.Resistance rL=0 "series resistance of inductor";
+  parameter SI.Current iL_start=0 "initial current";
   /*Capacitor*/
   parameter SI.Capacitance C_electro(displayUnit="uF")=47e-6 "electrolytic capacitance (can be disconnected)";
   parameter SI.Capacitance C_ceramic(displayUnit="uF")=3*4.7e-6 "ceramic capacitance";
   final parameter SI.Capacitance C(displayUnit="uF")=if electrolytic then C_electro+C_ceramic else C_ceramic "total capacitance";
-  
   parameter SI.Resistance rC=0 "series resistance of capacitor";
   parameter Boolean electrolytic=true "connection of electrolytic capacitor in // with the ceramic one";
-
+  parameter SI.Voltage vC_start=0 "initial voltage";
 
  Modelica.Electrical.Analog.Interfaces.NegativePin gnd "ground (DC bus -)" annotation(
     Placement(transformation(origin = {0, -100}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {0, -100}, extent = {{-10, -10}, {10, 10}})));
@@ -21,9 +21,9 @@ model LCFilter "LC filter of TWIST board"
     Placement(transformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {100, 0}, extent = {{-10, -10}, {10, 10}})));
 
  
-  Modelica.Electrical.Analog.Basic.Inductor LL(final L = L)  annotation(
+  Modelica.Electrical.Analog.Basic.Inductor LL(final L = L, i(start = iL_start, fixed = true))  annotation(
     Placement(transformation(origin = {-50, 0}, extent = {{-10, -10}, {10, 10}})));
-  Modelica.Electrical.Analog.Basic.Capacitor CC(final C = C)  annotation(
+  Modelica.Electrical.Analog.Basic.Capacitor CC(final C = C, v(start = vC_start, fixed = true))  annotation(
     Placement(transformation(origin = {40, -30}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Electrical.Analog.Basic.Resistor Cr(final R = rC)  annotation(
     Placement(transformation(origin = {40, -70}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));

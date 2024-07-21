@@ -1,4 +1,4 @@
-package OwnModel
+package OwnModel "Models of OwnTech power electronics converter boards"
 
 import Modelica.Units.SI;
 

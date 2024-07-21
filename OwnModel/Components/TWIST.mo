@@ -19,9 +19,9 @@ Modelica.Blocks.Interfaces.RealInput duty2 "duty cycle of leg 2" annotation(
     Placement(transformation(origin = {-20, 40}, extent = {{-10, -20}, {10, 20}})));
   Components.PWMLeg leg2 "power leg 2" annotation(
     Placement(transformation(origin = {40, -40}, extent = {{-10, -20}, {10, 20}})));
-  LCFilter filter1 "output LC filter of leg 1" annotation(
+  LCFilter filter1(final rC= 0)  "output LC filter of leg 1" annotation(
     Placement(transformation(origin = {70, 40}, extent = {{-10, -10}, {10, 10}})));
-  LCFilter filter2 "output LC filter of leg 2" annotation(
+  LCFilter filter2(final rC = 0)  "output LC filter of leg 2" annotation(
     Placement(transformation(origin = {70, -40}, extent = {{-10, -10}, {10, 10}})));
 equation
   connect(leg1.gnd, gnd) annotation(

@@ -19,10 +19,10 @@ model Buck "TWIST board used as a buck (step down) DC/DC converter supplying a r
     Placement(transformation(origin = {-48, 16}, extent = {{-10, 10}, {10, -10}})));
   Modelica.Blocks.Sources.BooleanExpression switchSelect(y = closed_loop)  annotation(
     Placement(transformation(origin = {-90, 16}, extent = {{-10, -10}, {10, 10}})));
-  Modelica.Blocks.Sources.Constant constVolt(k = 12) "constant voltage reference" annotation(
-    Placement(transformation(origin = {-124, -10}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Electrical.Analog.Sensors.VoltageSensor vLoad annotation(
     Placement(transformation(origin = {100, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
+  Modelica.Blocks.Sources.Step stepVolt(height = 0.5, offset = 12, startTime = 0.2)  annotation(
+    Placement(transformation(origin = {-144, -10}, extent = {{-10, -10}, {10, 10}})));
 equation
   connect(ground.p, twist.gnd) annotation(
     Line(points = {{40, -80}, {40, -40}}, color = {0, 0, 255}));
@@ -52,8 +52,8 @@ equation
     Line(points = {{100, -40}, {80, -40}}, color = {0, 0, 255}));
   connect(vLoad.v, ctrl.u_m) annotation(
     Line(points = {{112, -30}, {128, -30}, {128, -100}, {-90, -100}, {-90, -22}}, color = {0, 0, 127}));
-  connect(constVolt.y, ctrl.u_s) annotation(
-    Line(points = {{-112, -10}, {-102, -10}}, color = {0, 0, 127}));
+  connect(stepVolt.y, ctrl.u_s) annotation(
+    Line(points = {{-133, -10}, {-102, -10}}, color = {0, 0, 127}));
 
 annotation(
     experiment(StartTime = 0, StopTime = 10e-3, Tolerance = 1e-06, Interval = 1e-06));

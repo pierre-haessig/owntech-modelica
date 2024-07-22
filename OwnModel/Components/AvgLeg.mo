@@ -5,7 +5,7 @@ model AvgLeg "Averaged model of Power converter leg with its PWM modulator"
   Real duty_eff "effective duty cycle (limited & lagged)";
   Modelica.Blocks.Nonlinear.Limiter limiter(uMax = 1, uMin = 0)  annotation(
     Placement(transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}})));
-  Modelica.Blocks.Continuous.FirstOrder lag(T = 1/f_pwm)  "PWM lag modeled as first order low pass filter T=1/f_pwm" annotation(
+  Modelica.Blocks.Continuous.FirstOrder lag(T = 0.5/f_pwm)  "PWM lag modeled as first order low pass filter T=1/f_pwm" annotation(
     Placement(transformation(origin = {-30, 0}, extent = {{-10, -10}, {10, 10}})));
 equation
   duty_eff = lag.y;

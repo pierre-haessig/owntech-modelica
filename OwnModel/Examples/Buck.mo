@@ -2,26 +2,26 @@ within OwnModel.Examples;
 
 model Buck "TWIST board used as a buck (step down) DC/DC converter supplying a resistive load"
   extends Modelica.Icons.Example;
-  parameter Boolean closed_loop=true "closed loop voltage control if true, else open loop (constant duty cycle)";
-  Components.TWIST twist(averaged = true)  annotation(
+  parameter Boolean closed_loop = true "closed loop voltage control if true, else open loop (constant duty cycle)";
+  Components.TWIST twist(averaged = true) annotation(
     Placement(transformation(origin = {40, -20}, extent = {{-20, -20}, {20, 20}})));
   Modelica.Electrical.Analog.Basic.Ground ground annotation(
     Placement(transformation(origin = {40, -90}, extent = {{-10, -10}, {10, 10}})));
-  Modelica.Electrical.Analog.Basic.Resistor load(R = 47)  annotation(
+  Modelica.Electrical.Analog.Basic.Resistor load(R = 47) annotation(
     Placement(transformation(origin = {80, -30}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Electrical.Analog.Sources.ConstantVoltage VSin(V = 20) "DC input source" annotation(
     Placement(transformation(origin = {-20, -10}, extent = {{-10, -10}, {10, 10}}, rotation = -90)));
   Modelica.Blocks.Sources.Constant constDuty(k = 0.75) "constant duty cycle reference" annotation(
     Placement(transformation(origin = {-90, 50}, extent = {{-10, -10}, {10, 10}})));
-  Modelica.Blocks.Continuous.LimPID ctrl(controllerType = Modelica.Blocks.Types.SimpleController.PI, k = 0.000215, Ti = 7.5175e-5, yMax = 1, yMin = 0, initType = Modelica.Blocks.Types.Init.InitialOutput, y_start = 0.6)  "voltage control" annotation(
+  Modelica.Blocks.Continuous.LimPID ctrl(controllerType = Modelica.Blocks.Types.SimpleController.PI, k = 0.000215, Ti = 7.5175e-5, yMax = 1, yMin = 0, initType = Modelica.Blocks.Types.Init.InitialOutput, y_start = 0.6) "voltage control" annotation(
     Placement(transformation(origin = {-90, -10}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Logical.Switch switch annotation(
     Placement(transformation(origin = {-48, 16}, extent = {{-10, 10}, {10, -10}})));
-  Modelica.Blocks.Sources.BooleanExpression switchSelect(y = closed_loop)  annotation(
+  Modelica.Blocks.Sources.BooleanExpression switchSelect(y = closed_loop) annotation(
     Placement(transformation(origin = {-90, 16}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Electrical.Analog.Sensors.VoltageSensor vLoad annotation(
     Placement(transformation(origin = {100, -30}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-  Modelica.Blocks.Sources.Step stepVolt(height = 0.5, offset = 12, startTime = 0.2)  annotation(
+  Modelica.Blocks.Sources.Step stepVolt(height = 0.5, offset = 12, startTime = 0.2) annotation(
     Placement(transformation(origin = {-144, -10}, extent = {{-10, -10}, {10, 10}})));
 equation
   connect(ground.p, twist.gnd) annotation(
@@ -54,7 +54,6 @@ equation
     Line(points = {{112, -30}, {128, -30}, {128, -100}, {-90, -100}, {-90, -22}}, color = {0, 0, 127}));
   connect(stepVolt.y, ctrl.u_s) annotation(
     Line(points = {{-133, -10}, {-102, -10}}, color = {0, 0, 127}));
-
-annotation(
-    experiment(StartTime = 0, StopTime = 10e-3, Tolerance = 1e-06, Interval = 1e-06));
+  annotation(
+    experiment(StartTime = 0, StopTime = 0.01, Tolerance = 1e-06, Interval = 1e-06));
 end Buck;

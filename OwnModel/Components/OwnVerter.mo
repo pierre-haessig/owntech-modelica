@@ -50,7 +50,7 @@ equation
     Line(points = {{0, 100}, {0, 80}, {30, 80}, {30, -20}}, color = {0, 0, 255}));
   connect(duty_abc, demux_duty.u) annotation(
     Line(points = {{-120, 0}, {-82, 0}}, color = {0, 0, 127}, thickness = 0.5));
-  connect(demux_duty.y1, leg1.duty) annotation(
+  connect(demux_duty.y1[1], leg1.duty) annotation(
     Line(points = {{-58, 8}, {-50, 8}, {-50, 40}, {-42, 40}}, color = {0, 0, 127}));
   connect(demux_duty.y2[1], leg2.duty) annotation(
     Line(points = {{-58, 0}, {-12, 0}}, color = {0, 0, 127}));

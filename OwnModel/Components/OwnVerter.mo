@@ -1,8 +1,8 @@
 within OwnModel.Components;
 
 model OwnVerter "OwnVerter three-phase power converter board, with PWM control"
-    parameter Boolean averaged = false "averaged model if true, else switched model";
-
+  parameter Boolean averaged = false "averaged model if true, else switched model";
+  parameter SI.Frequency f_pwm(displayUnit="kHz")=200e3 "PWM switching frequency";
 Modelica.Electrical.Analog.Interfaces.NegativePin gnd "ground (DC bus -)" annotation(
     Placement(transformation(origin = {0, -100}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {0, -100}, extent = {{-10, -10}, {10, 10}})));
    Modelica.Electrical.Analog.Interfaces.PositivePin high "high side of leg (DC bus +)" annotation(
@@ -17,11 +17,11 @@ Modelica.Electrical.Analog.Interfaces.NegativePin gnd "ground (DC bus -)" annota
   Modelica.Blocks.Interfaces.RealInput duty_abc[3] "three-phase duty cycles" annotation(
     Placement(transformation(origin = {-120, 0}, extent = {{-20, -20}, {20, 20}}), iconTransformation(origin = {-120, 0}, extent = {{-20, -20}, {20, 20}})));
 
-  Components.PWMorAvgLeg leg1(averaged = averaged) "power leg, phase 1" annotation(
+  Components.PWMorAvgLeg leg1(averaged = averaged, final f_pwm = f_pwm) "power leg, phase 1" annotation(
     Placement(transformation(origin = {-30, 40}, extent = {{-10, -20}, {10, 20}})));
-  Components.PWMorAvgLeg leg2(averaged = averaged) "power leg, phase 2" annotation(
+  Components.PWMorAvgLeg leg2(averaged = averaged, final f_pwm = f_pwm) "power leg, phase 2" annotation(
     Placement(transformation(extent = {{-10, -20}, {10, 20}})));
-  Components.PWMorAvgLeg leg3(averaged = averaged) "power leg, phase 3" annotation(
+  Components.PWMorAvgLeg leg3(averaged = averaged, final f_pwm = f_pwm) "power leg, phase 3" annotation(
     Placement(transformation(origin = {30, -40}, extent = {{-10, -20}, {10, 20}})));
   Modelica.Blocks.Routing.DeMultiplex3 demux_duty annotation(
     Placement(transformation(origin = {-70, 0}, extent = {{-10, -10}, {10, 10}})));
@@ -77,6 +77,5 @@ equation
   connect(mux_im.y, i_abc) annotation(
     Line(points = {{122, -90}, {150, -90}}, color = {0, 0, 127}, thickness = 0.5));
   annotation(
-    Icon(graphics = {Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {0, 40}, extent = {{-80, 40}, {80, -40}}, textString = "OwnVerter"), Text(origin = {0, -60}, extent = {{-90, 20}, {90, -20}}, textString = "averaged: %averaged")}),
-  experiment(StartTime = 0, StopTime = 1, Tolerance = 1e-06, Interval = 0.002));
+    Icon(graphics = {Rectangle(extent = {{-100, 100}, {100, -100}}), Text(origin = {1, 60}, extent = {{-91, 40}, {91, -40}}, textString = "OwnVerter"), Text(origin = {0, -50}, textColor = {26, 95, 180}, extent = {{-80, 30}, {80, -30}}, textString = if averaged then "averaged" else "switched"), Text(textColor = {26, 95, 180}, extent = {{-80, 20}, {80, -20}}, textString = "%f_pwm")}));
 end OwnVerter;

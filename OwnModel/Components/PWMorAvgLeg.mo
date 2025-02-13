@@ -4,7 +4,7 @@ model PWMorAvgLeg "Power converter leg with its PWM modulator that can be select
   extends Interfaces.ModulatedLeg;
   parameter Boolean averaged = false "averaged model if true, else switched model";
   /*The two alternative models*/
-  PWMLeg pwm_leg if not averaged annotation(
+  PWMLeg pwm_leg(f_pwm = f_pwm)  if not averaged annotation(
     Placement(transformation(origin = {0, 40}, extent = {{-10, -20}, {10, 20}})));
   AvgLeg avg_leg if averaged annotation(
     Placement(transformation(origin = {0, -40}, extent = {{-10, -20}, {10, 20}})));
